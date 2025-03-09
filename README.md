@@ -1,0 +1,2 @@
+# data_modeling_abdulazeez_stef_de24
+Learning data modeling
