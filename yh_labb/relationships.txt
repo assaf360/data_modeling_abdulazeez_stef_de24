@@ -1,0 +1,33 @@
+-- 1. Student → Klass (En student tillhör en klass)
+ALTER TABLE Student ADD CONSTRAINT fk_student_klass
+FOREIGN KEY (klass_id) REFERENCES Klass(klass_id);
+
+-- 2. Klass → Program (En klass tillhör ett program)
+ALTER TABLE Klass ADD CONSTRAINT fk_klass_program
+FOREIGN KEY (program_id) REFERENCES Program(program_id);
+
+-- 3. Klass → Utbildningsledare (En klass har en utbildningsledare)
+ALTER TABLE Klass ADD CONSTRAINT fk_klass_utbildningsledare
+FOREIGN KEY (utbildningsledare_id) REFERENCES Utbildningsledare(utbildningsledare_id);
+
+-- 4. Program → Kurs (M:N via Program_kurs)
+CREATE TABLE Program_kurs (
+    program_id INTEGER,
+    kurs_id INTEGER,
+    PRIMARY KEY (program_id, kurs_id),
+    FOREIGN KEY (program_id) REFERENCES Program(program_id),
+    FOREIGN KEY (kurs_id) REFERENCES Kurs(kurs_id)
+);
+
+-- 5. Utbildare → Kurs (M:N via Utbildare_kurs)
+CREATE TABLE Utbildare_kurs (
+    utbildare_id INTEGER,
+    kurs_id INTEGER,
+    PRIMARY KEY (utbildare_id, kurs_id),
+    FOREIGN KEY (utbildare_id) REFERENCES Utbildare(utbildare_id),
+    FOREIGN KEY (kurs_id) REFERENCES Kurs(kurs_id)
+);
+
+-- 6. Utbildare → Company (N:1, endast om is_consult = TRUE)
+ALTER TABLE Utbildare ADD CONSTRAINT fk_utbildare_company
+FOREIGN KEY (company_id) REFERENCES Company(company_id);
